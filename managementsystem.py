@@ -24,6 +24,9 @@ class ManagementSystem:
         """
         Initialize a ManagementSystem object.
         """
+        self.employees = []
+        self.projects = []
+        self.tasks = []
         pass
 
     def add_employee(self, employee):
@@ -33,6 +36,7 @@ class ManagementSystem:
         Args:
             employee (Employee): The employee to be added.
         """
+        self.employees.append(employee)
         pass
 
     def remove_employee(self, emp_id):
@@ -42,6 +46,15 @@ class ManagementSystem:
         Args:
             emp_id (str): The ID of the employee to be removed.
         """
+        index = -1
+        for i in range(len(self.employees)):
+            if self.employees[i].emp_id == emp_id:
+                index = i
+                break
+
+        if(not index == -1):
+            self.employees.pop(index)
+
         pass
 
     def add_project(self, project):
@@ -51,6 +64,7 @@ class ManagementSystem:
         Args:
             project (Project): The project to be added.
         """
+        self.projects.append(project)
         pass
 
     def add_task(self, task):
@@ -60,6 +74,7 @@ class ManagementSystem:
         Args:
             task (Task): The task to be added.
         """
+        self.tasks.append(task)
         pass
 
     def assign_employee_to_project(self, emp_id, project_id):
@@ -73,4 +88,22 @@ class ManagementSystem:
         Raises:
             ValueError: If employee or project is not found.
         """
+        emp_index = -1
+        for i in range(len(self.employees)):
+            if self.employees[i].emp_id == emp_id:
+                emp_index = i
+                break
+
+        proj_index = -1
+        for i in range(len(self.projects)):
+            if self.projects[i].project_id == project_id:
+                proj_index = i
+                break
+
+        if emp_index == -1:
+            raise ValueError("Employee by id not found")
+        elif proj_index == -1:
+            raise ValueError("Project by id not found")
+        else:
+            self.projects[proj_index].assign_employee(self.employees[emp_index])
         pass
